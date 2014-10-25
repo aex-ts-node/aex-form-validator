@@ -1,0 +1,29 @@
+{
+  "name": "sails-params",
+  "version": "0.0.1",
+  "description": "request filters",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/calidion/sails-params.git"
+  },
+  "keywords": [
+    "sails",
+    "req",
+    "http",
+    "param"
+  ],
+  "author": "calidion",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/calidion/sails-params/issues"
+  },
+  "homepage": "https://github.com/calidion/sails-params",
+  "devDependencies": {
+    "mocha": "^2.0.1",
+    "should": "^4.1.0"
+  }
+}
