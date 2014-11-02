@@ -5,7 +5,8 @@ describe('sails-params', function(){
   var req = {
     data: {
       'a': 100,
-      'b': 200
+      'b': 200,
+      'c': 300
     },
     param: function(k) {
       return req.data[k];
@@ -13,7 +14,7 @@ describe('sails-params', function(){
   };
 
 
-  var params = ['a', 'b', 'c'];
+  var params = ['a', 'b', {name: 'c', alias: 'd'}];
 
   var data = {};
 
@@ -37,6 +38,7 @@ describe('sails-params', function(){
     it('should be assigned after ', function(){
       assert.equal(100,  data.a);
       assert.equal(200,  data.b);
+      assert.equal(300,  data.d);
     })
   })
 })
