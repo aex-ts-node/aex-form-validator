@@ -23,5 +23,12 @@ module.exports = {
       }
     }
     return true;
+  },
+  count: function(o) {
+    var i = 0;
+    for(var k in o) {
+      i++;
+    }
+    return i;
   }
 };

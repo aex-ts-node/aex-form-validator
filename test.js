@@ -37,6 +37,7 @@ describe('sails-params', function () {
       assert.equal(100, data.a);
       assert.equal(200, data.b);
       assert.equal(300, data.d);
+      assert.equal(3, filter.count(data));
     })
   })
 })
