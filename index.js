@@ -45,33 +45,27 @@ module.exports = {
   /**
    * Validating data
    *
-   * @param data                  - Data to be validated
-   * @param validators            - Validator objects
-   *                              //validator format
+   * @param params                - Data to be validated
+   * @param confs                 - Validator confs
+   *                              //validator configuration
    *                              {
-   *                                 type: 'string', 'email', 'phone', 'ip', 'url',
+   *                                 type: ['string', 'email', 'phone', 'ip', 'url'],
    *                                 maxLength: 10,
    *                                 minLength: 10,
    *                                 locale: 'zh-CN',
+   *                                 matches: 'paramName'
+   *                                 required: true/false,
    *                                 options:
    *                              }
+   * @param error                 - Error info
    */
-  validate: function (data, validators, reason) {
+  validate: function (params, validators, error) {
+
+    error = error || {};
 
     var paramValidator = require('./params-validator');
 
-    for (var k in validators) {
-      var v = validators[k];
-      if (!paramValidator.validate(data[k], v)) {
-        reason = {
-          k: k,
-          v: v,
-          data: data[k]
-        }
-        return false;
-      }
-    }
-    return true;
+    return paramValidator.validate(params, validators, error)
   }
   ,
 
