@@ -1,27 +1,28 @@
 {
-  "name": "sails-params",
-  "version": "0.0.3",
-  "description": "request filters",
+  "name": "req-validator",
+  "version": "0.0.1",
+  "description": "http requests' filters, vaidators",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/calidion/sails-params.git"
+    "url": "https://github.com/calidion/req-validator.git"
   },
   "keywords": [
     "sails",
     "req",
     "http",
-    "param"
+    "param",
+    "validator"
   ],
   "author": "calidion",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/calidion/sails-params/issues"
+    "url": "https://github.com/calidion/req-validator/issues"
   },
-  "homepage": "https://github.com/calidion/sails-params",
+  "homepage": "https://github.com/calidion/req-validator",
   "devDependencies": {
     "mocha": "^2.0.1",
     "should": "^4.1.0"
