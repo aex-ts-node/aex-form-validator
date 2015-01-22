@@ -35,7 +35,7 @@ var validator = require('validator');
 
 
 var typePair = {
-  'email': 'isMail',
+  'email': 'isEmail',
   'url': 'isURL',
   'fqdn': 'isFQDN',
   'ip': 'isIP',
@@ -67,7 +67,10 @@ module.exports = {
         case 'phone':
           return func(data, conf.locale || 'zh-CN');
         default:
-          return func(data);
+
+          if (func instanceof Function) {
+            return func(data);
+          }
       }
     } else {
       switch (conf.type) {
@@ -79,7 +82,13 @@ module.exports = {
 
   },
   validate: function (params, confs, error) {
+    var count = 0;
+    if (params instanceof Array) {
+      error.reason = 'Params must be a json object';
+      return false;
+    }
     for(var k in params) {
+      count ++;
       var param = params[k];
       var conf = confs[k];
       error.key = k;
@@ -88,7 +97,7 @@ module.exports = {
       }
       if (conf.required) {
         if (validator.isNull(param) || !validator.isLength(param, 1)) {
-          error.reason = 'key ' + k + " is NULL";
+          error.reason = 'Key ' + k + " is NULL";
           return false;
         }
       }
@@ -109,7 +118,10 @@ module.exports = {
         }
       }
     }
-    error.key = null;
+    delete error.key;
+    if (!count) {
+      return false;
+    }
     return true;
   }
 

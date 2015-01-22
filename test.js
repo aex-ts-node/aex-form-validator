@@ -172,7 +172,7 @@ describe('sails-params', function () {
       params.k1 = null;
       assert.equal(false, filter.validate(params, confs, error));
       assert.equal(true, error.key == 'k1');
-      assert.equal(true, 'key ' + error.key + " is NULL" == error.reason);
+      assert.equal(true, 'Key ' + error.key + " is NULL" == error.reason);
     });
 
 
@@ -203,6 +203,56 @@ describe('sails-params', function () {
       assert.equal(true, filter.validate(params, confs, error));
       assert.equal(false, error.key == 'k1');
       assert.equal(false, 'Not validate key k1' == error.reason);
+    });
+
+
+    it('should validate matches', function() {
+      var params = {
+        k1: '13581723443',
+        k2: 'hello',
+        k3: 'http://www.foobar.com/'
+      };
+      var confs = {
+        k1: {
+
+          type: 'phone',
+          locale: 'zh-CN'
+
+        },
+        k2: {
+          matches: 'k1'
+        },
+        k3: {
+          type: 'url'
+        }
+      };
+      var error = {};
+
+      assert.equal(false, filter.validate(params, confs, error));
+      assert.equal(true, error.key == 'k2');
+      assert.equal(true, 'Not match key k1' == error.reason);
+    });
+
+    it('should not validate arrays', function() {
+      var params = ['aa', 'ddd', 'ddd'];
+      var confs = {
+        k1: {
+
+          type: 'phone',
+          locale: 'zh-CN'
+
+        },
+        k2: {
+          matches: 'k1'
+        },
+        k3: {
+          type: 'url'
+        }
+      };
+      var error = {};
+
+      assert.equal(false, filter.validate(params, confs, error));
+      assert.equal(true, 'Params must be a json object' == error.reason);
     });
 
   });
