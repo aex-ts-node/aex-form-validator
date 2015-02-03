@@ -1,5 +1,5 @@
 var assert = require("assert")
-describe('sails-params', function () {
+describe('req-validator', function () {
   var filter = require('./index');
   var req = {
     data: {
@@ -255,6 +255,40 @@ describe('sails-params', function () {
       assert.equal(true, 'Params must be a json object' == error.reason);
     });
 
+  });
+  describe('#result()', function () {
+    it('should validate', function() {
+      var req1 = {
+        data: {
+          'k1': '13181715210',
+          'k2': '13181715210',
+          'k3': 'http://www.sina.com'
+        },
+        param: function (k) {
+          return req.data[k];
+        }
+      };
+      var confs = {
+        k1: {
+          alias: 'phone',
+          type: 'phone',
+          locale: 'zh-CN'
+
+        },
+        k2: {
+          matches: 'k1'
+        },
+        k3: {
+          type: 'url'
+        }
+      };
+      var validator = filter;
+      var data = {}, error = {};
+      var result = validator.v(req, confs, data, error);
+      assert(true, result);
+      assert(true, data.phone !== undefined);
+      assert(true, data.k2)
+    });
   });
 })
 

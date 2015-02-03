@@ -7,6 +7,7 @@ var validator = require('validator');
    name: 'k',//origin name of the post request
    alias: 'k1', //converted name for model to save
    required: true/false,
+   alias: 'extractedName',
    type: [
     'string',
     'email',
@@ -34,7 +35,7 @@ var validator = require('validator');
 
 
 
-var typePair = {
+var type2Func = {
   'email': 'isEmail',
   'url': 'isURL',
   'fqdn': 'isFQDN',
@@ -60,9 +61,11 @@ var typePair = {
 
 module.exports = {
 
+
+
   validateOne: function (data, conf, error) {
-    if (conf.type in typePair) {
-      var func = validator[typePair[conf.type]];
+    if (conf.type in type2Func) {
+      var func = validator[type2Func[conf.type]];
       switch (conf.type) {
         case 'phone':
           return func(data, conf.locale || 'zh-CN');

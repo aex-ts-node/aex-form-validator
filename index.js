@@ -1,6 +1,30 @@
 module.exports = {
 
   /**
+   * Verify the request input and validate the input type
+   *
+   * @param req                - HTTP request handler
+   * @param confs              - Configuration for parameter validation
+   * @param data               - Request data and data to be validated.
+   * @param error              - Detailed error info
+   * @returns {boolean}
+   */
+  v: function (req, confs, data, error) {
+    var params = [];
+    for(var key in confs) {
+      if (confs[key].alias) {
+        params.push({name: key, alias: confs[key].alias});
+      } else {
+        params.push(key);
+      }
+    }
+    if (!this.extract(req, data, params)) {
+      return false;
+    }
+    return this.validate(params, confs, error);
+  },
+
+  /**
    * Http request data extraction & validation
    *
    * @param req                 - HTTP request handler
@@ -58,14 +82,16 @@ module.exports = {
    *                                 options:
    *                              }
    * @param error                 - Error info
+   *
+   * @returns {boolean}
    */
-  validate: function (params, validators, error) {
+  validate: function (params, confs, error) {
 
     error = error || {};
 
-    var paramValidator = require('./params-validator');
+    var paramValidator = require('./validator');
 
-    return paramValidator.validate(params, validators, error)
+    return paramValidator.validate(params, confs, error)
   }
   ,
 
