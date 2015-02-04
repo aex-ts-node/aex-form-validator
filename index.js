@@ -11,18 +11,28 @@ module.exports = {
    */
   v: function (req, confs, data, error) {
     var params = [];
-    for(var key in confs) {
-      if (confs[key].ignore) continue;
-      if (confs[key].alias) {
-        params.push({name: key, alias: confs[key].alias});
-      } else {
-        params.push(key);
+    var ignores = [];
+    for (var key in confs) {
+      if (confs[key].ignore) {
+        ignores.push(key);
       }
+      if (confs[key].alias) {
+        ignores.push(key);
+        params.push({name: key, alias: confs[key].alias});
+      }
+      params.push(key);
     }
     if (!this.extract(req, data, params)) {
       return false;
     }
-    return this.validate(params, confs, error);
+    if (!this.validate(data, confs, error)) {
+      return false;
+    }
+
+    for (var i = 0; i < ignores.length; i++) {
+      delete data[ignores[i]];
+    }
+    return true;
   },
 
   /**
@@ -90,9 +100,9 @@ module.exports = {
 
     error = error || {};
 
-    var paramValidator = require('./validator');
+    var validator = require('./validator');
 
-    return paramValidator.validate(params, confs, error)
+    return validator.validate(params, confs, error)
   }
   ,
 

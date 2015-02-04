@@ -8,7 +8,7 @@ describe('req-validator', function () {
       'c': 300
     },
     param: function (k) {
-      return req.data[k];
+      return this.data[k];
     }
   };
 
@@ -256,6 +256,7 @@ describe('req-validator', function () {
     });
 
   });
+
   describe('#result()', function () {
     it('should validate', function() {
       var req1 = {
@@ -265,7 +266,7 @@ describe('req-validator', function () {
           'k3': 'http://www.sina.com'
         },
         param: function (k) {
-          return req.data[k];
+          return this.data[k];
         }
       };
       var confs = {
@@ -287,11 +288,12 @@ describe('req-validator', function () {
       };
       var validator = filter;
       var data = {}, error = {};
-      var result = validator.v(req, confs, data, error);
-      assert(true, result);
-      assert(true, data.phone !== undefined);
-      assert(true, data.k2);
-      assert(true, data.k4 === undefined);
+      var result = validator.v(req1, confs, data, error);
+      assert.equal(true, result);
+      assert.equal(true, data.phone === '13181715210');
+      assert.equal(true, data.k3 === 'http://www.sina.com');
+      assert.equal(true, !!data.k2);
+      assert.equal(true, data.k4 === undefined);
     });
   });
 })
