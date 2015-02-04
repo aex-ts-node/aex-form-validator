@@ -12,6 +12,7 @@ module.exports = {
   v: function (req, confs, data, error) {
     var params = [];
     for(var key in confs) {
+      if (confs[key].ignore) continue;
       if (confs[key].alias) {
         params.push({name: key, alias: confs[key].alias});
       } else {

@@ -280,6 +280,9 @@ describe('req-validator', function () {
         },
         k3: {
           type: 'url'
+        },
+        k4: {
+          ignore: true
         }
       };
       var validator = filter;
@@ -287,7 +290,8 @@ describe('req-validator', function () {
       var result = validator.v(req, confs, data, error);
       assert(true, result);
       assert(true, data.phone !== undefined);
-      assert(true, data.k2)
+      assert(true, data.k2);
+      assert(true, data.k4 === undefined);
     });
   });
 })
