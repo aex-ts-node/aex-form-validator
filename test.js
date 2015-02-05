@@ -263,7 +263,13 @@ describe('req-validator', function () {
         data: {
           'k1': '13181715210',
           'k2': '13181715210',
-          'k3': 'http://www.sina.com'
+          'k3': 'http://www.sina.com',
+          'k5': '10:00',
+          'k6': '24:00',
+          'k7': '00:19',
+          'k8': '19:59',
+          'k9': '24:00:00',
+          'k9': '23:59:59'
         },
         param: function (k) {
           return this.data[k];
@@ -284,6 +290,21 @@ describe('req-validator', function () {
         },
         k4: {
           ignore: true
+        },
+        k5: {
+          type: 'time'
+        },
+        k6: {
+          type: 'time'
+        },
+        k7: {
+          type: 'time'
+        },
+        k8: {
+          type: 'time'
+        },
+        k9: {
+          type: 'time'
         }
       };
       var validator = filter;
@@ -294,6 +315,7 @@ describe('req-validator', function () {
       assert.equal(true, data.k3 === 'http://www.sina.com');
       assert.equal(true, !!data.k2);
       assert.equal(true, data.k4 === undefined);
+      assert.equal(true, data.k5 === '10:00');
     });
   });
 })

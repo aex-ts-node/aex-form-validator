@@ -55,13 +55,12 @@ var type2Func = {
   'isbn': 'isISBN',
   'phone': 'isMobilePhone',
   'ascii': 'isAscii',
-  'multibyte': 'isMultibyte'
+  'multibyte': 'isMultibyte',
+  'time': 'isTime'
 
 };
 
 module.exports = {
-
-
 
   validateOne: function (data, conf, error) {
     if (conf.type in type2Func) {
@@ -69,6 +68,8 @@ module.exports = {
       switch (conf.type) {
         case 'phone':
           return func(data, conf.locale || 'zh-CN');
+        case 'time':
+          return /^(([0-1][0-9]||2[0-3]):([0-5][0-9])(:[0-5][0-9]){0,1}||24:00(:00){0,1})$/.test(data);
         default:
 
           if (func instanceof Function) {
