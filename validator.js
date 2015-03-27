@@ -57,11 +57,9 @@ var type2Func = {
   'ascii': 'isAscii',
   'multibyte': 'isMultibyte',
   'time': 'isTime'
-
 };
 
 module.exports = {
-
   validateOne: function (data, conf, error) {
     if (conf.type in type2Func) {
       var func = validator[type2Func[conf.type]];
@@ -69,7 +67,7 @@ module.exports = {
         case 'phone':
           return func(data, conf.locale || 'zh-CN');
         case 'time':
-          return /^(([0-1][0-9]||2[0-3]):([0-5][0-9])(:[0-5][0-9]){0,1}||24:00(:00){0,1})$/.test(data);
+          return /^(([0-9]||[0-1][0-9]||2[0-3]):([0-5][0-9])(:[0-5][0-9]){0,1}||24:00(:00){0,1})$/.test(data);
         default:
 
           if (func instanceof Function) {

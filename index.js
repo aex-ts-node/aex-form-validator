@@ -1,3 +1,30 @@
+
+
+/**
+ * Determine if the named field is a file
+ *
+ * @param req
+ * @param name
+ * @param error
+ * @param cb
+ * @returns {*|boolean}
+ */
+
+var isFile = function(req, name, error, cb) {
+  if (req.files) {
+    return cb(req.files[name] && req.files[name].size > 0);
+  }
+  
+  if (req.file instanceof Function) {
+    req.file(name).upload(function () {
+      
+    });
+  }
+
+
+
+};
+
 module.exports = {
 
   /**

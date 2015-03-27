@@ -269,7 +269,10 @@ describe('req-validator', function () {
           'k7': '00:19',
           'k8': '19:59',
           'k9': '24:00:00',
-          'k9': '23:59:59'
+          'k9': '23:59:59',
+          'k10': '1:19',
+          'k10': '1:00'
+
         },
         param: function (k) {
           return this.data[k];
@@ -304,6 +307,9 @@ describe('req-validator', function () {
           type: 'time'
         },
         k9: {
+          type: 'time'
+        },
+        k10: {
           type: 'time'
         }
       };
