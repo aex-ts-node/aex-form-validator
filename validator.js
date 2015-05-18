@@ -89,7 +89,7 @@ module.exports = {
       error.reason = 'Params must be a json object';
       return false;
     }
-    for(var k in params) {
+    for(var k in confs) {
       count ++;
       var param = params[k];
       var conf = confs[k];
