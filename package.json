@@ -8,7 +8,7 @@
     "email": "calidion@gmail.com",
     "url": "blog.3gcnbeta.com"
   },
-  "repository": "calidion/node-form-validator",
+  "repository": "JSSDKCN/node-form-validator",
   "license": "MIT",
   "files": [
     "index.js",
