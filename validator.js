@@ -60,7 +60,7 @@ var type2Func = {
 };
 
 module.exports = {
-  validateOne: function (data, conf, error) {
+  validateOne: function (data, conf) {
     if (conf.type in type2Func) {
       var func = validator[type2Func[conf.type]];
       switch (conf.type) {
@@ -106,7 +106,7 @@ module.exports = {
 
       if (conf.matches) {
         var match = params[conf.matches];
-        if (param != match) {
+        if (param !== match) {
           error.reason = 'Not match key ' + conf.matches;
           return false;
         }

@@ -1,6 +1,6 @@
-var assert = require("assert")
+var assert = require("assert");
 describe('req-validator', function () {
-  var filter = require('./index');
+  var filter = require('../index');
   var req = {
     data: {
       'a': 100,
@@ -38,7 +38,7 @@ describe('req-validator', function () {
       assert.equal(200, data.b);
       assert.equal(300, data.d);
       assert.equal(3, filter.count(data));
-    })
+    });
   });
 
   describe('#validate()', function () {
@@ -75,16 +75,16 @@ describe('req-validator', function () {
       };
       assert.equal(false, filter.validate(params, confs, error));
       assert.equal(false, filter.validate(params, confs));
-      assert.equal(true, params[error.key] == params.k1);
-      assert.equal(true, 'Not validate key k1' == error.reason);
+      assert.equal(true, params[error.key] === params.k1);
+      assert.equal(true, 'Not validate key k1' === error.reason);
 
       assert.equal(false, filter.validate(params2, confs2, error));
-      assert.equal(true, params2[error.key] == params2.k2);
-      assert.equal(true, 'Not validate key k2' == error.reason);
+      assert.equal(true, params2[error.key] === params2.k2);
+      assert.equal(true, 'Not validate key k2' === error.reason);
 
       assert.equal(true, filter.validate(params3, confs3, error));
-      assert.equal(false, error.key == 'k3');
-      assert.equal(false, 'Not validate key k3' == error.reason);
+      assert.equal(false, error.key === 'k3');
+      assert.equal(false, 'Not validate key k3' === error.reason);
 
     });
 
@@ -102,8 +102,8 @@ describe('req-validator', function () {
       var error = {};
 
       assert.equal(true, filter.validate(params, confs, error));
-      assert.equal(false, error.key == 'k1');
-      assert.equal(false, 'Not validate key k1' == error.reason);
+      assert.equal(false, error.key === 'k1');
+      assert.equal(false, 'Not validate key k1' === error.reason);
 
       var params2 = {
         k2: 'aaaa'
@@ -115,8 +115,8 @@ describe('req-validator', function () {
         }
       };
       assert.equal(false, filter.validate(params2, confs2, error));
-      assert.equal(true, error.key == 'k2');
-      assert.equal(true, 'Not validate key k2' == error.reason);
+      assert.equal(true, error.key === 'k2');
+      assert.equal(true, 'Not validate key k2' === error.reason);
     });
 
 
@@ -134,9 +134,9 @@ describe('req-validator', function () {
       var error = {};
 
       assert.equal(true, filter.validate(params, confs, error));
-      assert.equal(false, error.key == 'k1' || error.key == 'k2');
-      assert.equal(false, 'Not validate key k1' == error.reason);
-      assert.equal(false, 'Not validate key k2' == error.reason);
+      assert.equal(false, error.key === 'k1' || error.key === 'k2');
+      assert.equal(false, 'Not validate key k1' === error.reason);
+      assert.equal(false, 'Not validate key k2' === error.reason);
 
 
       var params2 = {
@@ -149,8 +149,8 @@ describe('req-validator', function () {
         }
       };
       assert.equal(false, filter.validate(params2, confs2, error));
-      assert.equal(true, error.key == 'k2');
-      assert.equal(false, null == error.reason);
+      assert.equal(true, error.key === 'k2');
+      assert.equal(false, null === error.reason);
     });
 
 
@@ -166,13 +166,13 @@ describe('req-validator', function () {
       var error = {};
 
       assert.equal(true, filter.validate(params, confs, error));
-      assert.equal(false, error.key == 'k1');
-      assert.equal(false, 'Not validate key k1' == error.reason);
+      assert.equal(false, error.key === 'k1');
+      assert.equal(false, 'Not validate key k1' === error.reason);
 
       params.k1 = null;
       assert.equal(false, filter.validate(params, confs, error));
-      assert.equal(true, error.key == 'k1');
-      assert.equal(true, 'Key ' + error.key + " is NULL" == error.reason);
+      assert.equal(true, error.key === 'k1');
+      assert.equal(true, 'Key ' + error.key + " is NULL" === error.reason);
     });
 
 
@@ -201,8 +201,8 @@ describe('req-validator', function () {
       var error = {};
 
       assert.equal(true, filter.validate(params, confs, error));
-      assert.equal(false, error.key == 'k1');
-      assert.equal(false, 'Not validate key k1' == error.reason);
+      assert.equal(false, error.key === 'k1');
+      assert.equal(false, 'Not validate key k1' === error.reason);
     });
 
 
@@ -229,8 +229,8 @@ describe('req-validator', function () {
       var error = {};
 
       assert.equal(false, filter.validate(params, confs, error));
-      assert.equal(true, error.key == 'k2');
-      assert.equal(true, 'Not match key k1' == error.reason);
+      assert.equal(true, error.key === 'k2');
+      assert.equal(true, 'Not match key k1' === error.reason);
     });
 
     it('should not validate arrays', function() {
@@ -252,7 +252,7 @@ describe('req-validator', function () {
       var error = {};
 
       assert.equal(false, filter.validate(params, confs, error));
-      assert.equal(true, 'Params must be a json object' == error.reason);
+      assert.equal(true, 'Params must be a json object' === error.reason);
     });
 
   });
@@ -269,9 +269,9 @@ describe('req-validator', function () {
           'k7': '00:19',
           'k8': '19:59',
           'k9': '24:00:00',
-          'k9': '23:59:59',
-          'k10': '1:19',
-          'k10': '1:00'
+          'k10': '23:59:59',
+          'k11': '1:19',
+          'k12': '1:00'
 
         },
         param: function (k) {
@@ -324,6 +324,6 @@ describe('req-validator', function () {
       assert.equal(true, data.k5 === '10:00');
     });
   });
-})
+});
 
 

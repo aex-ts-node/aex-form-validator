@@ -10,20 +10,20 @@
  * @returns {*|boolean}
  */
 
+  /*
+
 var isFile = function(req, name, error, cb) {
   if (req.files) {
     return cb(req.files[name] && req.files[name].size > 0);
   }
-  
+
   if (req.file instanceof Function) {
     req.file(name).upload(function () {
-      
+
     });
   }
-
-
-
 };
+*/
 
 module.exports = {
 
@@ -86,16 +86,17 @@ module.exports = {
 
     for (var i = 0; i < params.length; i++) {
       var k = params[i];
+      var v = null;
       var type = typeof k;
       switch (type) {
         case 'string':
-          var v = req.param(k);
+          v = req.param(k);
           if (v) {
             data[k] = v;
           }
           break;
         case 'object':
-          var v = req.param(k.name);
+          v = req.param(k.name);
           if (v) {
             data[k.alias] = v;
           }
@@ -129,9 +130,8 @@ module.exports = {
 
     var validator = require('./validator');
 
-    return validator.validate(params, confs, error)
-  }
-  ,
+    return validator.validate(params, confs, error);
+  },
 
   /**
    *    Object parameters counting
@@ -140,10 +140,6 @@ module.exports = {
    * @returns {number}
    */
   count: function (o) {
-    var i = 0;
-    for (var k in o) {
-      i++;
-    }
-    return i;
+    return Object.keys(o).length;
   }
 };

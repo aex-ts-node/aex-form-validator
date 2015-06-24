@@ -1,66 +1,37 @@
-sails-params
-============
+#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
-params extraction for sails
+> form,validator,node,json,object
 
-```javascript
 
-//Inside sails controller
-module.exports = {
-  add: function (req, res) {
+## Install
 
-    var filter = require("sails-params");
-
-    var params = [
-      {name: 'key', alias: 'alias'},
-      'key1'
-    ];
-    var data = {};
-
-    if (!filter.extract(req, data, params)) {
-      return false;
-    }
-    
-    //You will have
-    //data.alias
-    //data.key1
-    //assigned
-
-  }
-}
-
+```sh
+$ npm install --save node-form-validator
 ```
 
-params validation
+
+## Usage
+
+```js
+var nodeFormValidator = require('node-form-validator');
+
+nodeFormValidator('Rainbow');
+```
+
+```sh
+# creates a browser.js
+$ npm run browser
+```
 
 
-```javascript
+## License
 
-var params = {
-        k1: '13581723443',
-        k2: 'hello',
-        k3: 'http://www.foobar.com/'
-      };
-      var confs = {
-        k1: {
+MIT © [calidion](blog.3gcnbeta.com)
 
-            type: 'phone',
-            locale: 'zh-CN'
 
-        },
-        k2: {
-          type: 'string',
-          minLength: 3,
-          maxLength: 5
-        },
-        k3: {
-          type: 'url'
-        }
-      };
-      var error = {};
-
-      assert.equal(true, filter.validate(params, confs, error));
-      assert.equal(false, error.key == 'k1');
-      assert.equal(false, 'Not validate key k1' == error.reason);
-      
-    ```
+[npm-image]: https://badge.fury.io/js/node-form-validator.svg
+[npm-url]: https://npmjs.org/package/node-form-validator
+[travis-image]: https://travis-ci.org/calidion/node-form-validator.svg?branch=master
+[travis-url]: https://travis-ci.org/calidion/node-form-validator
+[daviddm-image]: https://david-dm.org/calidion/node-form-validator.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/calidion/node-form-validator
