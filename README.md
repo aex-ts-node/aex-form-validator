@@ -13,9 +13,32 @@ $ npm install --save node-form-validator
 ## Usage
 
 ```js
-var nodeFormValidator = require('node-form-validator');
+var validator = require('node-form-validator');
 
-nodeFormValidator('Rainbow');
+    var conf = {
+      signature: {
+        type: 'string',
+        minLength: 3,
+        maxLength: 64,
+        required: true
+      },
+
+      timestamp: {
+        type: 'string',
+        minLength: 3,
+        maxLength: 64,
+        required: true
+      },
+      nonce: {
+        type: 'string',
+        required: true
+      },
+      echostr: {
+        type: 'string',
+        required: true
+      }
+    };
+    validator.validate(conf, data, error)) {
 ```
 
 ```sh
