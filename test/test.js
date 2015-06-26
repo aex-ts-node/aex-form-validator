@@ -89,7 +89,7 @@ describe('req-validator', function () {
     });
 
 
-    it('should validate mobile phone numbers', function() {
+    it('should validate mobile phone numbers', function () {
       var params = {
         k1: '13581723443'
       };
@@ -120,7 +120,7 @@ describe('req-validator', function () {
     });
 
 
-    it('should validate matches', function() {
+    it('should validate matches', function () {
       var params = {
         k1: '13581723443',
         k2: '13581723443'
@@ -154,7 +154,7 @@ describe('req-validator', function () {
     });
 
 
-    it('should validate required', function() {
+    it('should validate required', function () {
       var params = {
         k1: '13581723443'
       };
@@ -176,7 +176,7 @@ describe('req-validator', function () {
     });
 
 
-    it('should validate many params together', function() {
+    it('should validate many params together', function () {
       var params = {
         k1: '13581723443',
         k2: 'hello',
@@ -185,8 +185,8 @@ describe('req-validator', function () {
       var confs = {
         k1: {
 
-            type: 'phone',
-            locale: 'zh-CN'
+          type: 'phone',
+          locale: 'zh-CN'
 
         },
         k2: {
@@ -206,7 +206,7 @@ describe('req-validator', function () {
     });
 
 
-    it('should validate matches', function() {
+    it('should validate matches', function () {
       var params = {
         k1: '13581723443',
         k2: 'hello',
@@ -233,7 +233,7 @@ describe('req-validator', function () {
       assert.equal(true, 'Not match key k1' === error.reason);
     });
 
-    it('should not validate arrays', function() {
+    it('should not validate arrays', function () {
       var params = ['aa', 'ddd', 'ddd'];
       var confs = {
         k1: {
@@ -258,7 +258,7 @@ describe('req-validator', function () {
   });
 
   describe('#result()', function () {
-    it('should validate', function() {
+    it('should validate', function () {
       var req1 = {
         data: {
           'k1': '13181715210',
@@ -322,6 +322,46 @@ describe('req-validator', function () {
       assert.equal(true, !!data.k2);
       assert.equal(true, data.k4 === undefined);
       assert.equal(true, data.k5 === '10:00');
+    });
+
+    it('should extra json', function () {
+      var req1 = {
+        'k1': '13181715210',
+        'k2': '13181715210',
+        'k3': 'http://www.sina.com',
+        'k5': '10:00',
+        'k6': '24:00',
+        'k7': '00:19',
+        'k8': '19:59',
+        'k9': '24:00:00',
+        'k10': '23:59:59',
+        'k11': '1:19',
+        'k12': '1:00'
+      };
+      var confs = {
+        k1: {
+          alias: 'phone',
+          type: 'phone',
+          locale: 'zh-CN'
+
+        },
+        k2: {
+          matches: 'k1'
+        },
+        k3: {
+          type: 'url'
+        },
+        k4: {
+          type: 'time'
+        }
+      };
+      var validator = filter.josn;
+      var data = validator.extract(req1, confs);
+      assert.equal(true, data.phone === '13181715210');
+      assert.equal(true, data.k3 === 'http://www.sina.com');
+      assert.equal(true, !!data.k2);
+      assert.equal(true, data.k4 === undefined);
+      assert.equal(true, data.k5 === undefined);
     });
   });
 });

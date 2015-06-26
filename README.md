@@ -12,6 +12,8 @@ $ npm install --save node-form-validator
 
 ## Usage
 
+
+
 ```js
 var validator = require('node-form-validator');
 
@@ -38,7 +40,8 @@ var validator = require('node-form-validator');
         required: true
       }
     };
-    validator.validate(conf, data, error)) {
+    validator.validate(conf, data, error));
+    
 ```
 
 ```sh
