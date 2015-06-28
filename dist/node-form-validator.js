@@ -143,7 +143,7 @@ module.exports = {
   count: function (o) {
     return Object.keys(o).length;
   },
-  josn: {
+  json: {
     /**
      * Http request data extraction & validation
      *

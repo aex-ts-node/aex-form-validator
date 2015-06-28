@@ -355,7 +355,7 @@ describe('req-validator', function () {
           type: 'time'
         }
       };
-      var validator = filter.josn;
+      var validator = filter.json;
       var data = validator.extract(req1, confs);
       assert.equal(true, data.phone === '13181715210');
       assert.equal(true, data.k3 === 'http://www.sina.com');
