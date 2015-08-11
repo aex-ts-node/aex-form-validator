@@ -1,6 +1,6 @@
 {
   "name": "node-form-validator",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "validator for objects, json, forms",
   "homepage": "https://github.com/JSSDKCN/node-form-validator",
   "author": {

@@ -77,7 +77,7 @@ module.exports = {
     } else {
       switch (conf.type) {
         case 'string':
-          return validator.isLength(data, conf.minLength || 0, conf.maxLength || 255);
+          return (typeof data === 'string') && (validator.isLength(data, conf.minLength || 0, conf.maxLength || 255));
       }
       return true;
     }

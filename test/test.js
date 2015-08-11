@@ -257,6 +257,38 @@ describe('req-validator', function () {
 
   });
 
+  it('should not validate integer as string', function() {
+    var params = {
+      k1: 1
+    };
+    var confs = {
+      k1: {
+
+        type: 'string',
+        required: true
+      }
+    };
+    var error = {};
+
+    assert.equal(false, filter.validate(params, confs, error));
+  });
+
+  it('should validate string', function() {
+    var params = {
+      k1: '1'
+    };
+    var confs = {
+      k1: {
+
+        type: 'string',
+        required: true
+      }
+    };
+    var error = {};
+
+    assert.equal(true, filter.validate(params, confs, error));
+  });
+
   describe('#result()', function () {
     it('should validate', function () {
       var req1 = {
