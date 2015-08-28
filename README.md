@@ -10,6 +10,34 @@ $ npm install --save node-form-validator
 ```
 
 
+## Supported types
+
+```js
+  'email'
+  'url'
+  'fqdn'
+  'ip'
+  'alpha'
+  'numeric'
+  'alphanumeric'
+  'base64'
+  'hexadecimal'
+  'hexcolor'
+  'int'
+  'float'
+  'uuid'
+  'date'
+  'json'
+  'creditcard'
+  'isbn'
+  'phone'
+  'ascii'
+  'multibyte'
+  'time'
+  'string': no more than 256 chars
+  'text': no more than 65536 chars
+```
+
 ## Usage
 
 
@@ -17,6 +45,7 @@ $ npm install --save node-form-validator
 ```js
 var validator = require('node-form-validator');
 
+    //Validate
     var conf = {
       signature: {
         type: 'string',
@@ -40,7 +69,42 @@ var validator = require('node-form-validator');
         required: true
       }
     };
+
     validator.validate(conf, data, error));
+    
+    //Extract 
+      var req1 = {
+        'k1': '13181715210',
+        'k2': '13181715210',
+        'k3': 'http://www.sina.com',
+        'k5': '10:00',
+        'k6': '24:00',
+        'k7': '00:19',
+        'k8': '19:59',
+        'k9': '24:00:00',
+        'k10': '23:59:59',
+        'k11': '1:19',
+        'k12': '1:00'
+      };
+      var confs = {
+        k1: {
+          alias: 'phone',
+          type: 'phone',
+          locale: 'zh-CN'
+
+        },
+        k2: {
+          matches: 'k1'
+        },
+        k3: {
+          type: 'url'
+        },
+        k4: {
+          type: 'time'
+        }
+      };
+      var validator = filter.json;
+      var data = validator.extract(req1, confs);
     
 ```
 
