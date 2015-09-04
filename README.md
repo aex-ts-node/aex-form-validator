@@ -111,7 +111,7 @@ var error = {};
 ```
 
 
-1. validate http requests
+- validate http requests
 
 ```js
 function(req, res) {
@@ -126,7 +126,7 @@ function(req, res) {
 }
 ```
 
-2. validate json objects
+- validate json objects
 
 ```js
   var dataToBeExtracted = {}
@@ -139,7 +139,7 @@ function(req, res) {
   }
 ```
 
-3. extraction from json
+- extraction from json
 
 ```js
   var extractedData = validator.json.extract(conf, dataToBeExtracted));
