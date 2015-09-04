@@ -40,7 +40,6 @@ There a currently 8 attributes available.
     string, If this attribute is specified, then the <code>name</code> field must be companied for it will be translated into this alias.    
 - <code>name<code>
     string, must be specifed when <code>alias</code> or <code>matches</code> enabled
-- <code>name<code>
 - <code>required<code>
     boolean.
     * true: when this field must be specified
