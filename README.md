@@ -38,18 +38,13 @@ There a currently 8 attributes available.
     string, if this attribute is specified, then there must be an another field to be matched with
 - <code>alias</code>
     string, If this attribute is specified, then the <code>name</code> field must be companied for it will be translated into this alias.    
-- <code>name<code>
-    string, must be specifed when <code>alias</code> or <code>matches</code> enabled
-- <code>required<code>
-    boolean.
+- <code>name<code> string, must be specifed when <code>alias</code> or <code>matches</code> enabled
+- <code>required<code> boolean.
     * true: when this field must be specified
     * false: default
-- <code>minLength<code>
-    integer, minimum length for a string, only valid when type is `string` or `text`
-- <code>maxLength<code>
-    integer, maximum length for a string, only valid when type is `string` or `text`
-- <code>locale<code>
-    string, must be locale strings, like `zh-CN`, `zh-HK`, `en-US`, `en-GB`
+- <code>minLength<code> integer, minimum length for a string, only valid when type is <code>string</code> or <code>text</code>
+- <code>maxLength<code> integer, maximum length for a string, only valid when type is <code>string</code> or <code>text</code>
+- <code>locale<code> string, must be locale strings, like <code>zh-CN</code>, <code>zh-HK</code>, <code>en-US</code>, <code>en-GB</code>
 
 ## Supported types
 
