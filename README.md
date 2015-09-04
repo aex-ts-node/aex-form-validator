@@ -1,6 +1,6 @@
 #  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 
-> form,validator,node,json,object
+> Validator for http request, json.
 
 
 ## Install
@@ -9,6 +9,48 @@
 $ npm install --save node-form-validator
 ```
 
+
+## Configurations
+
+### Format
+
+A configuration is an object with fieldNames and attributes describing the corresponding fieldName.
+
+The following is a very simple example for node-form-valiator configuration
+
+```js
+var conf = {
+  fieldName: {
+    type: 'string'
+    required: true,
+    minLength: 1,
+    maxLength: 100
+  }
+}
+```
+#### Attributes
+
+There a currently 8 attributes available.
+
+- <code>type</code>
+    string, required for every fields to be validated
+- <code>matches</code>
+    string, if this attribute is specified, then there must be an another field to be matched with
+- <code>alias</code>
+    string, If this attribute is specified, then the <code>name</code> field must be companied for it will be translated into this alias.    
+- <code>name<code>
+    string, must be specifed when <code>alias</code> or <code>matches</code> enabled
+- <code>name<code>
+- <code>required<code>
+    boolean.
+    * true: when this field must be specified
+    * false: default
+- <code>minLength<code>
+    integer, minimum length for a string, only valid when type is `string` or `text`
+- <code>maxLength<code>
+    integer, maximum length for a string, only valid when type is `string` or `text`
+- <code>locale<code>
+    string, must be locale strings, like `zh-CN`, `zh-HK`, `en-US`, `en-GB`
 
 ## Supported types
 
@@ -40,29 +82,26 @@ $ npm install --save node-form-validator
 
 ## Usage
 
-
-
-```js
-var validator = require('node-form-validator');
+### Define configuration
 
     //Validate
     var conf = {
-      signature: {
+      password: {
         type: 'string',
         minLength: 3,
         maxLength: 64,
         required: true
       },
 
-      timestamp: {
+      comfirm: {
         type: 'string',
-        minLength: 3,
-        maxLength: 64,
+        matches: 'password',
         required: true
       },
-      nonce: {
-        type: 'string',
-        required: true
+      phone: {
+        type: 'phone',
+        required: true,
+        locale: 'zh-CN'  
       },
       echostr: {
         type: 'string',
@@ -70,47 +109,46 @@ var validator = require('node-form-validator');
       }
     };
 
-    validator.validate(conf, data, error));
-    
-    //Extract 
-      var req1 = {
-        'k1': '13181715210',
-        'k2': '13181715210',
-        'k3': 'http://www.sina.com',
-        'k5': '10:00',
-        'k6': '24:00',
-        'k7': '00:19',
-        'k8': '19:59',
-        'k9': '24:00:00',
-        'k10': '23:59:59',
-        'k11': '1:19',
-        'k12': '1:00'
-      };
-      var confs = {
-        k1: {
-          alias: 'phone',
-          type: 'phone',
-          locale: 'zh-CN'
+### Validation
 
-        },
-        k2: {
-          matches: 'k1'
-        },
-        k3: {
-          type: 'url'
-        },
-        k4: {
-          type: 'time'
-        }
-      };
-      var validator = filter.json;
-      var data = validator.extract(req1, confs);
-    
+```js
+var validator = require('node-form-validator');
+var error = {};
 ```
 
-```sh
-# creates a browser.js
-$ npm run browser
+
+1. validate http requests
+
+```js
+function(req, res) {
+  var dataToBeExtracted = {}
+  //Errors reported
+  var error = {};
+  if (validator.v(req, conf, dataToBeExtracted, error)) {
+  // Do something for validation passed
+  } else {
+  // Do something for validation failed
+  }
+}
+```
+
+2. validate json objects
+
+```js
+  var dataToBeExtracted = {}
+  //Errors reported
+  var error = {};
+  if (validator.validate(conf, dataToBeExtracted, error)) {
+  // Do something for validation passed
+  } else {
+  // Do something for validation failed
+  }
+```
+
+3. extraction from json
+
+```js
+  var extractedData = validator.json.extract(conf, dataToBeExtracted));
 ```
 
 
