@@ -26,17 +26,17 @@
     "validator": "^4.5.0"
   },
   "devDependencies": {
-    "browserify": "^9.0.3",
+    "browserify": "^13.0.0",
     "grunt": "^0.4.5",
-    "grunt-browserify": "^3.8.0",
+    "grunt-browserify": "^4.0.1",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.11.0",
     "grunt-contrib-nodeunit": "^0.4.1",
-    "grunt-contrib-uglify": "^0.9.1",
+    "grunt-contrib-uglify": "^0.11.0",
     "grunt-contrib-watch": "^0.6.1",
-    "grunt-mocha-cli": "^1.12.0",
+    "grunt-mocha-cli": "^2.0.0",
     "istanbul": "^0.4.2",
-    "jshint-stylish": "^1.0.1",
+    "jshint-stylish": "^2.1.0",
     "load-grunt-tasks": "^3.1.0",
     "mocha": "^2.3.4",
     "time-grunt": "^1.1.0"
