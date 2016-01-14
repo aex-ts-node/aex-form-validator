@@ -250,9 +250,10 @@ describe('req-validator', function () {
         }
       };
       var error = {};
+      var result = filter.validate(params, confs, error);
 
-      assert.equal(false, filter.validate(params, confs, error));
-      assert.equal(true, 'Params must be a json object' === error.reason);
+      assert.equal(false, result);
+      assert.equal(true, 'Params must not be an Array!' === error.reason);
     });
 
   });
@@ -375,7 +376,6 @@ describe('req-validator', function () {
           alias: 'phone',
           type: 'phone',
           locale: 'zh-CN'
-
         },
         k2: {
           matches: 'k1'
@@ -394,6 +394,61 @@ describe('req-validator', function () {
       assert.equal(true, !!data.k2);
       assert.equal(true, data.k4 === undefined);
       assert.equal(true, data.k5 === undefined);
+    });
+
+    it('should validate objects', function () {
+      var req1 = {
+        'k1': {
+          kk1: 'hello',
+          kk2: {
+            kk3: 1,
+            kk4: {
+              kk5: 'http://www.sina.com',
+              kk6: '13581725228'
+            }
+          }
+        },
+        'k12': '1:00'
+      };
+      var confs = {
+        k1: {
+          type: 'object',
+          validate: {
+            kk1: {
+              type: 'string'
+            },
+            kk2: {
+              type: 'object',
+              validate: {
+                kk3: {
+                  type: 'number'
+                },
+                kk4: {
+                  type: 'object',
+                  validate: {
+                    kk5: {
+                      type: 'url',
+                      required: true
+                    },
+                    kk6: {
+                      type: 'phone',
+                      alias: 'phone',
+                      locale: 'zh-CN'
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        k12: {
+          type: 'time'
+        }
+      };
+      var validator = filter.json;
+      var data = validator.extract(req1, confs);
+      assert.deepEqual(data, req1);
     });
   });
 });

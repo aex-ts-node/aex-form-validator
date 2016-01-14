@@ -1,31 +1,4 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-
-
-/**
- * Determine if the named field is a file
- *
- * @param req
- * @param name
- * @param error
- * @param cb
- * @returns {*|boolean}
- */
-
-  /*
-
-var isFile = function(req, name, error, cb) {
-  if (req.files) {
-    return cb(req.files[name] && req.files[name].size > 0);
-  }
-
-  if (req.file instanceof Function) {
-    req.file(name).upload(function () {
-
-    });
-  }
-};
-*/
-
 module.exports = {
 
   /**
@@ -231,6 +204,8 @@ module.exports = {
         module.exports = definition();
     } else if (typeof define === 'function' && typeof define.amd === 'object') {
         define(definition);
+    } else if (typeof define === 'function' && typeof define.petal === 'object') {
+        define(name, [], definition);
     } else {
         this[name] = definition();
     }
@@ -238,13 +213,15 @@ module.exports = {
 
     'use strict';
 
-    validator = { version: '3.43.0' };
+    validator = { version: '4.5.0' };
 
-    var emailUser = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e])|(\\[\x01-\x09\x0b\x0c\x0d-\x7f])))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))$/i;
+    var emailUserPart = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~]+$/i;
+    var quotedEmailUser = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f]))*$/i;
 
-    var emailUserUtf8 = /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))$/i;
+    var emailUserUtf8Part = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+$/i;
+    var quotedEmailUserUtf8 = /^([\s\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|(\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*$/i;
 
-    var displayName = /^(?:[a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~\.]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(?:[a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~\.]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\s)*<(.+)>$/i;
+    var displayName = /^[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+[a-z\d!#\$%&'\*\+\-\/=\?\^_`{\|}~\.\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF\s]*<(.+)>$/i;
 
     var creditCard = /^(?:4[0-9]{12}(?:[0-9]{3})?|5[1-5][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/;
 
@@ -252,6 +229,8 @@ module.exports = {
 
     var isbn10Maybe = /^(?:[0-9]{9}X|[0-9]{10})$/
       , isbn13Maybe = /^(?:[0-9]{13})$/;
+
+    var macAddress = /^([0-9a-fA-F][0-9a-fA-F]:){5}([0-9a-fA-F][0-9a-fA-F])$/;
 
     var ipv4Maybe = /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/
       , ipv6Block = /^[0-9A-F]{1,4}$/i;
@@ -269,7 +248,7 @@ module.exports = {
       , int = /^(?:[-+]?(?:0|[1-9][0-9]*))$/
       , float = /^(?:[-+]?(?:[0-9]+))?(?:\.[0-9]*)?(?:[eE][\+\-]?(?:[0-9]+))?$/
       , hexadecimal = /^[0-9A-F]+$/i
-      , decimal = /^[-+]?[0-9]*(\.[0-9]+)?$/
+      , decimal = /^[-+]?([0-9]+|\.[0-9]+|[0-9]+\.[0-9]+)$/
       , hexcolor = /^#?([0-9A-F]{3}|[0-9A-F]{6})$/i;
 
     var ascii = /^[\x00-\x7F]+$/
@@ -282,18 +261,27 @@ module.exports = {
     var base64 = /^(?:[A-Z0-9+\/]{4})*(?:[A-Z0-9+\/]{2}==|[A-Z0-9+\/]{3}=|[A-Z0-9+\/]{4})$/i;
 
     var phones = {
-      'zh-CN': /^(\+?0?86\-?)?1[345789]\d{9}$/,
+      'zh-CN': /^(\+?0?86\-?)?((13\d|14[57]|15[^4,\D]|17[678]|18\d)\d{8}|170[059]\d{7})$/,
+      'zh-TW': /^(\+?886\-?|0)?9\d{8}$/,
       'en-ZA': /^(\+?27|0)\d{9}$/,
       'en-AU': /^(\+?61|0)4\d{8}$/,
       'en-HK': /^(\+?852\-?)?[569]\d{3}\-?\d{4}$/,
       'fr-FR': /^(\+?33|0)[67]\d{8}$/,
       'pt-PT': /^(\+351)?9[1236]\d{7}$/,
-      'el-GR': /^(\+30)?((2\d{9})|(69\d{8}))$/,
+      'el-GR': /^(\+?30)?(69\d{8})$/,
       'en-GB': /^(\+?44|0)7\d{9}$/,
       'en-US': /^(\+?1)?[2-9]\d{2}[2-9](?!11)\d{6}$/,
       'en-ZM': /^(\+26)?09[567]\d{7}$/,
-      'ru-RU': /^(\+?7|8)?9\d{9}$/
+      'ru-RU': /^(\+?7|8)?9\d{9}$/,
+      'nb-NO': /^(\+?47)?[49]\d{7}$/,
+      'nn-NO': /^(\+?47)?[49]\d{7}$/,
+      'vi-VN': /^(0|\+?84)?((1(2([0-9])|6([2-9])|88|99))|(9((?!5)[0-9])))([0-9]{7})$/,
+      'en-NZ': /^(\+?64|0)2\d{7,9}$/,
+      'en-IN': /^(\+?91|0)?[789]\d{9}$/
     };
+
+    // from http://goo.gl/0ejHHW
+    var iso8601 = /^([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?$/;
 
     validator.extend = function (name, fn) {
         validator[name] = function () {
@@ -320,10 +308,8 @@ module.exports = {
             input = input.toString();
         } else if (input === null || typeof input === 'undefined' || (isNaN(input) && !input.length)) {
             input = '';
-        } else if (typeof input !== 'string') {
-            input += '';
         }
-        return input;
+        return '' + input;
     };
 
     validator.toDate = function (date) {
@@ -378,8 +364,6 @@ module.exports = {
             if (display_email) {
                 str = display_email[1];
             }
-        } else if (/\s/.test(str)) {
-            return false;
         }
 
         var parts = str.split('@')
@@ -391,13 +375,33 @@ module.exports = {
             user = user.replace(/\./g, '').toLowerCase();
         }
 
+        if (!validator.isByteLength(user, 0, 64) ||
+                !validator.isByteLength(domain, 0, 256)) {
+            return false;
+        }
+
         if (!validator.isFQDN(domain, {require_tld: options.require_tld})) {
             return false;
         }
 
-        return options.allow_utf8_local_part ?
-            emailUserUtf8.test(user) :
-            emailUser.test(user);
+        if (user[0] === '"') {
+            user = user.slice(1, user.length - 1);
+            return options.allow_utf8_local_part ?
+                quotedEmailUserUtf8.test(user) :
+                quotedEmailUser.test(user);
+        }
+
+        var pattern = options.allow_utf8_local_part ?
+            emailUserUtf8Part : emailUserPart;
+
+        var user_parts = user.split('.');
+        for (var i = 0; i < user_parts.length; i++) {
+            if (!pattern.test(user_parts[i])) {
+                return false;
+            }
+        }
+
+        return true;
     };
 
     var default_url_options = {
@@ -470,6 +474,10 @@ module.exports = {
             return false;
         }
         return true;
+    };
+
+    validator.isMACAddress = function (str) {
+        return macAddress.test(str);
     };
 
     validator.isIP = function (str, version) {
@@ -566,8 +574,14 @@ module.exports = {
             if (!/^[a-z\u00a1-\uffff0-9-]+$/i.test(part)) {
                 return false;
             }
-            if (part[0] === '-' || part[part.length - 1] === '-' ||
-                    part.indexOf('---') >= 0) {
+            if (/[\uff01-\uff5e]/.test(part)) {
+                // disallow full-width chars
+                return false;
+            }
+            if (part[0] === '-' || part[part.length - 1] === '-') {
+                return false;
+            }
+            if (part.indexOf('---') >= 0 && part.slice(0, 4) !== 'xn--') {
                 return false;
             }
         }
@@ -589,9 +603,9 @@ module.exports = {
     validator.isNumeric = function (str) {
         return numeric.test(str);
     };
-    
+
     validator.isDecimal = function (str) {
-        return decimal.test(str);
+        return str !== '' && decimal.test(str);
     };
 
     validator.isHexadecimal = function (str) {
@@ -617,7 +631,10 @@ module.exports = {
 
     validator.isFloat = function (str, options) {
         options = options || {};
-        return str !== '' && float.test(str) && (!options.hasOwnProperty('min') || str >= options.min) && (!options.hasOwnProperty('max') || str <= options.max);
+        if (str === '' || str === '.') {
+            return false;
+        }
+        return float.test(str) && (!options.hasOwnProperty('min') || str >= options.min) && (!options.hasOwnProperty('max') || str <= options.max);
     };
 
     validator.isDivisibleBy = function (str, num) {
@@ -635,7 +652,8 @@ module.exports = {
     };
 
     validator.isByteLength = function (str, min, max) {
-        return str.length >= min && (typeof max === 'undefined' || str.length <= max);
+        var len = encodeURI(str).split(/%..|./).length - 1;
+        return len >= min && (typeof max === 'undefined' || len <= max);
     };
 
     validator.isUUID = function (str, version) {
@@ -643,8 +661,84 @@ module.exports = {
         return pattern && pattern.test(str);
     };
 
+    function getTimezoneOffset(str) {
+        var iso8601Parts = str.match(iso8601)
+          , timezone, sign, hours, minutes;
+        if (!iso8601Parts) {
+            str = str.toLowerCase();
+            timezone = str.match(/(?:\s|gmt\s*)(-|\+)(\d{1,4})(\s|$)/);
+            if (!timezone) {
+                return str.indexOf('gmt') !== -1 ? 0 : null;
+            }
+            sign = timezone[1];
+            var offset = timezone[2];
+            if (offset.length === 3) {
+                offset = '0' + offset;
+            }
+            if (offset.length <= 2) {
+                hours = 0;
+                minutes = parseInt(offset);
+            } else {
+                hours = parseInt(offset.slice(0, 2));
+                minutes = parseInt(offset.slice(2, 4));
+            }
+        } else {
+            timezone = iso8601Parts[21];
+            if (!timezone) {
+                return null;
+            }
+            if (timezone === 'z' || timezone === 'Z') {
+                return 0;
+            }
+            sign = iso8601Parts[22];
+            if (timezone.indexOf(':') !== -1) {
+                hours = parseInt(iso8601Parts[23]);
+                minutes = parseInt(iso8601Parts[24]);
+            } else {
+                hours = 0;
+                minutes = parseInt(iso8601Parts[23]);
+            }
+        }
+        return (hours * 60 + minutes) * (sign === '-' ? 1 : -1);
+    }
+
     validator.isDate = function (str) {
-        return !isNaN(Date.parse(str));
+        var normalizedDate = new Date(Date.parse(str));
+        if (isNaN(normalizedDate)) {
+            return false;
+        }
+
+        // normalizedDate is in the user's timezone. Apply the input
+        // timezone offset to the date so that the year and day match
+        // the input
+        var timezoneOffset = getTimezoneOffset(str);
+        if (timezoneOffset !== null) {
+            var timezoneDifference = normalizedDate.getTimezoneOffset() -
+                timezoneOffset;
+            normalizedDate = new Date(normalizedDate.getTime() +
+                60000 * timezoneDifference);
+        }
+
+        var day = String(normalizedDate.getDate());
+        var dayOrYear, dayOrYearMatches, year;
+        //check for valid double digits that could be late days
+        //check for all matches since a string like '12/23' is a valid date
+        //ignore everything with nearby colons
+        dayOrYearMatches = str.match(/(^|[^:\d])[23]\d([^:\d]|$)/g);
+        if (!dayOrYearMatches) {
+            return true;
+        }
+        dayOrYear = dayOrYearMatches.map(function(digitString) {
+            return digitString.match(/\d+/g)[0];
+        }).join('/');
+
+        year = String(normalizedDate.getFullYear()).slice(-2);
+        if (dayOrYear === day || dayOrYear === year) {
+            return true;
+        } else if ((dayOrYear === (day + '/' + year)) || (dayOrYear === (year + '/' + day))) {
+            return true;
+        }
+        return false;
     };
 
     validator.isAfter = function (str, date) {
@@ -656,7 +750,7 @@ module.exports = {
     validator.isBefore = function (str, date) {
         var comparison = validator.toDate(date || new Date())
           , original = validator.toDate(str);
-        return original && comparison && original < comparison;
+        return !!(original && comparison && original < comparison);
     };
 
     validator.isIn = function (str, options) {
@@ -673,6 +767,16 @@ module.exports = {
             return options.indexOf(str) >= 0;
         }
         return false;
+    };
+
+    validator.isWhitelisted = function (str, chars) {
+        for (var i = str.length - 1; i >= 0; i--) {
+            if (chars.indexOf(str[i]) === -1) {
+                return false;
+            }
+        }
+
+        return true;
     };
 
     validator.isCreditCard = function (str) {
@@ -833,6 +937,10 @@ module.exports = {
         return validator.isHexadecimal(str) && str.length === 24;
     };
 
+    validator.isISO8601 = function (str) {
+        return iso8601.test(str);
+    };
+
     validator.ltrim = function (str, chars) {
         var pattern = chars ? new RegExp('^[' + chars + ']+', 'g') : /^\s+/g;
         return str.replace(pattern, '');
@@ -872,7 +980,9 @@ module.exports = {
     };
 
     var default_normalize_email_options = {
-        lowercase: true
+        lowercase: true,
+        remove_dots: true,
+        remove_extension: true
     };
 
     validator.normalizeEmail = function (email, options) {
@@ -883,11 +993,16 @@ module.exports = {
         var parts = email.split('@', 2);
         parts[1] = parts[1].toLowerCase();
         if (parts[1] === 'gmail.com' || parts[1] === 'googlemail.com') {
-            parts[0] = parts[0].toLowerCase().replace(/\./g, '');
-            if (parts[0][0] === '+') {
+            if (options.remove_extension) {
+                parts[0] = parts[0].split('+')[0];
+            }
+            if (options.remove_dots) {
+                parts[0] = parts[0].replace(/\./g, '');
+            }
+            if (!parts[0].length) {
                 return false;
             }
-            parts[0] = parts[0].split('+')[0];
+            parts[0] = parts[0].toLowerCase();
             parts[1] = 'gmail.com';
         } else if (options.lowercase) {
             parts[0] = parts[0].toLowerCase();
@@ -988,7 +1103,8 @@ var validator = require('validator');
     'float',
     'uuid',
     'date',
-    'json'
+    'json',
+    'object'
     ],
    maxLength: 10,
    minLength: 10,
@@ -1024,7 +1140,7 @@ var type2Func = {
 };
 
 module.exports = {
-  validateOne: function (data, conf) {
+  validateOne: function (data, conf, error) {
     if (conf.type in type2Func) {
       var func = validator[type2Func[conf.type]];
       switch (conf.type) {
@@ -1040,6 +1156,8 @@ module.exports = {
       }
     } else {
       switch (conf.type) {
+        case 'object':
+          return this.validate(data, conf.validate, error);
         case 'text':
           return (typeof data === 'string') && (validator.isLength(data, conf.minLength || 0, conf.maxLength || 65536));
         case 'string':
@@ -1051,10 +1169,28 @@ module.exports = {
   },
   validate: function (params, confs, error) {
     var count = 0;
+    error = error || {};
+
     if (params instanceof Array) {
-      error.reason = 'Params must be a json object';
+      error.reason = 'Params must not be an Array!';
       return false;
     }
+
+    if (confs instanceof Array) {
+      error.reason = 'Confs must not be an Array!';
+      return false;
+    }
+
+      if (!(params instanceof Object)) {
+      error.reason = 'Params must be an object!';
+      return false;
+    }
+
+    if (!(confs instanceof Object)) {
+      error.reason = 'Confs must be an object!';
+      return false;
+    }
+
     for(var k in confs) {
       count ++;
       var param = params[k];
@@ -1063,6 +1199,8 @@ module.exports = {
       if (!conf) {
         continue;
       }
+
+      //`required` attribute passing
       if (conf.required) {
         if (validator.isNull(param) || !validator.isLength(param, 1)) {
           error.reason = 'Key ' + k + " is NULL";
@@ -1070,6 +1208,7 @@ module.exports = {
         }
       }
 
+      //`matches` attribute passing
       if (conf.matches) {
         var match = params[conf.matches];
         if (param !== match) {

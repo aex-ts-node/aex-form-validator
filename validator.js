@@ -24,7 +24,8 @@ var validator = require('validator');
     'float',
     'uuid',
     'date',
-    'json'
+    'json',
+    'object'
     ],
    maxLength: 10,
    minLength: 10,
@@ -60,7 +61,7 @@ var type2Func = {
 };
 
 module.exports = {
-  validateOne: function (data, conf) {
+  validateOne: function (data, conf, error) {
     if (conf.type in type2Func) {
       var func = validator[type2Func[conf.type]];
       switch (conf.type) {
@@ -76,6 +77,8 @@ module.exports = {
       }
     } else {
       switch (conf.type) {
+        case 'object':
+          return this.validate(data, conf.validate, error);
         case 'text':
           return (typeof data === 'string') && (validator.isLength(data, conf.minLength || 0, conf.maxLength || 65536));
         case 'string':
@@ -87,10 +90,28 @@ module.exports = {
   },
   validate: function (params, confs, error) {
     var count = 0;
+    error = error || {};
+
     if (params instanceof Array) {
-      error.reason = 'Params must be a json object';
+      error.reason = 'Params must not be an Array!';
       return false;
     }
+
+    if (confs instanceof Array) {
+      error.reason = 'Confs must not be an Array!';
+      return false;
+    }
+
+      if (!(params instanceof Object)) {
+      error.reason = 'Params must be an object!';
+      return false;
+    }
+
+    if (!(confs instanceof Object)) {
+      error.reason = 'Confs must be an object!';
+      return false;
+    }
+
     for(var k in confs) {
       count ++;
       var param = params[k];
@@ -99,6 +120,8 @@ module.exports = {
       if (!conf) {
         continue;
       }
+
+      //`required` attribute passing
       if (conf.required) {
         if (validator.isNull(param) || !validator.isLength(param, 1)) {
           error.reason = 'Key ' + k + " is NULL";
@@ -106,6 +129,7 @@ module.exports = {
         }
       }
 
+      //`matches` attribute passing
       if (conf.matches) {
         var match = params[conf.matches];
         if (param !== match) {

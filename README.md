@@ -32,19 +32,41 @@ var conf = {
 
 There a currently 8 attributes available.
 
-- <code>type</code>
-    string, required for every fields to be validated
-- <code>matches</code>
-    string, if this attribute is specified, then there must be an another field to be matched with
-- <code>alias</code>
-    string, If this attribute is specified, then the <code>name</code> field must be companied for it will be translated into this alias.    
-- <code>name</code> string, must be specifed when <code>alias</code> or <code>matches</code> enabled
-- <code>required</code> boolean.
+- <code>type</code> string
+
+   required for every fields to be validated
+
+- <code>matches</code> string
+
+  if this attribute is specified, then there must be an another field to be matched with
+
+- <code>alias</code> string
+
+  If this attribute is specified, then the <code>name</code> field must be companied for it will be translated into this alias
+
+- <code>name</code> string
+
+  must be specifed when <code>alias</code> or <code>matches</code> enabled
+
+- <code>required</code> boolean
     * true: when this field must be specified
     * false: default
-- <code>minLength</code> integer, minimum length for a string, only valid when type is <code>string</code> or <code>text</code>
-- <code>maxLength</code> integer, maximum length for a string, only valid when type is <code>string</code> or <code>text</code>
-- <code>locale</code> string, must be locale strings, like <code>zh-CN</code>, <code>zh-HK</code>, <code>en-US</code>, <code>en-GB</code>
+
+- <code>minLength</code> integer
+
+  minimum length for a string, only valid when type is <code>string</code> or <code>text</code>
+
+- <code>maxLength</code> integer
+  maximum length for a string, only valid when type is <code>string</code> or <code>text</code>
+
+- <code>locale</code> string
+
+  must be locale strings, like <code>zh-CN</code>, <code>zh-HK</code>, <code>en-US</code>, <code>en-GB</code>
+
+- <code>validate</code> object
+
+  this means you have children to validate, only with type <code>object</code>
+
 
 ## Supported types
 
@@ -70,14 +92,17 @@ There a currently 8 attributes available.
   'ascii'
   'multibyte'
   'time'
-  'string': no more than 256 chars
-  'text': no more than 65536 chars
+  'string', //no more than 256 chars
+  'text',   //no more than 65536 chars,
+  'object'  //have children
 ```
 
 ## Usage
 
 ### Define configuration
 
+
+```js
     //Validate
     var conf = {
       password: {
@@ -86,39 +111,52 @@ There a currently 8 attributes available.
         maxLength: 64,
         required: true
       },
-
-      comfirm: {
-        type: 'string',
-        matches: 'password',
-        required: true
-      },
-      phone: {
-        type: 'phone',
-        required: true,
-        locale: 'zh-CN'  
-      },
-      echostr: {
-        type: 'string',
-        required: true
+      children: {
+        type: 'object',   //children enabled
+        validate: {
+          child1: {
+            type: 'string'
+          },
+          child2: {
+            type: 'phone'
+          },
+          child3: {
+            type: 'object', //children enabled
+            validate: {
+              ...
+            }
+          }
+        }
       }
     };
+    var dataToBeExtracted = {
+      password: 'sfdo@sdfosfod',
+      children: {
+        child1: 'hell',
+        child2: '13923213239',
+        child3: {}
+      }
+    };
+```
 
 ### Validation
 
 ```js
 var validator = require('node-form-validator');
+
 var error = {};
 ```
 
 
-- validate http requests
+#### Validate http requests
 
 ```js
 function(req, res) {
-  var dataToBeExtracted = {}
+
   //Errors reported
   var error = {};
-  if (validator.v(req, conf, dataToBeExtracted, error)) {
+  var data = {};
+  if (validator.v(req, conf, data, error)) {
   // Do something for validation passed
   } else {
   // Do something for validation failed
@@ -126,23 +164,23 @@ function(req, res) {
 }
 ```
 
-- validate json objects
+#### Validate json objects
 
 ```js
-  var dataToBeExtracted = {}
+  var json = {}
   //Errors reported
   var error = {};
-  if (validator.validate(conf, dataToBeExtracted, error)) {
+  if (validator.validate(json, conf, error)) {
   // Do something for validation passed
   } else {
   // Do something for validation failed
   }
 ```
 
-- extraction from json
+#### Extraction from json
 
 ```js
-  var extractedData = validator.json.extract(conf, dataToBeExtracted));
+  var extractedData = validator.json.extract(json, conf));
 ```
 
 

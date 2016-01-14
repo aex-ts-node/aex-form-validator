@@ -1,6 +1,6 @@
 {
   "name": "node-form-validator",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "validator for objects, json, forms",
   "homepage": "https://github.com/JSSDKCN/node-form-validator",
   "author": {
@@ -23,10 +23,11 @@
     "object"
   ],
   "dependencies": {
-    "validator": "^3.40.1"
+    "validator": "^4.5.0"
   },
   "devDependencies": {
     "browserify": "^9.0.3",
+    "grunt": "^0.4.5",
     "grunt-browserify": "^3.8.0",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-jshint": "^0.11.0",
@@ -34,12 +35,14 @@
     "grunt-contrib-uglify": "^0.9.1",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-mocha-cli": "^1.12.0",
+    "istanbul": "^0.4.2",
     "jshint-stylish": "^1.0.1",
     "load-grunt-tasks": "^3.1.0",
-    "time-grunt": "^1.1.0",
-    "validator": "^3.40.1"
+    "mocha": "^2.3.4",
+    "time-grunt": "^1.1.0"
   },
   "scripts": {
-    "test": "grunt"
+    "test": "grunt",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/"
   }
 }
