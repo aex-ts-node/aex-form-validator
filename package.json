@@ -6,14 +6,12 @@
   "author": {
     "name": "calidion",
     "email": "calidion@gmail.com",
-    "url": "blog.3gcnbeta.com"
+    "url": ""
   },
-  "repository": "JSSDKCN/node-form-validator",
-  "license": "MIT",
   "files": [
-    "index.js",
-    "validator.js"
+    "lib"
   ],
+  "main": "lib/index.js",
   "keywords": [
     "node-form-validator",
     "form",
@@ -22,27 +20,23 @@
     "json",
     "object"
   ],
-  "dependencies": {
-    "validator": "^4.5.0"
-  },
+  "repository": "JSSDK/node-form-validator",
   "devDependencies": {
-    "browserify": "^13.0.0",
-    "grunt": "^0.4.5",
-    "grunt-browserify": "^4.0.1",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-jshint": "^0.11.0",
-    "grunt-contrib-nodeunit": "^0.4.1",
-    "grunt-contrib-uglify": "^0.11.0",
-    "grunt-contrib-watch": "^0.6.1",
-    "grunt-mocha-cli": "^2.0.0",
-    "istanbul": "^0.4.2",
-    "jshint-stylish": "^2.1.0",
-    "load-grunt-tasks": "^3.1.0",
-    "mocha": "^2.3.4",
-    "time-grunt": "^1.1.0"
+    "gulp": "^3.6.0",
+    "gulp-eslint": "^1.0.0",
+    "gulp-exclude-gitignore": "^1.0.0",
+    "gulp-istanbul": "^0.9.0",
+    "gulp-mocha": "^2.0.0",
+    "gulp-plumber": "^1.0.0",
+    "gulp-nsp": "^2.1.0",
+    "gulp-coveralls": "^0.1.0"
   },
   "scripts": {
-    "test": "grunt",
-    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter spec --check-leaks test/"
+    "prepublish": "gulp prepublish",
+    "test": "gulp"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "validator": "^5.1.0"
   }
 }

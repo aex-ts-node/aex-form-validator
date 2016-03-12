@@ -1,9 +1,7 @@
-#  [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
+# node-form-validator [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage percentage][coveralls-image]][coveralls-url]
+> Validator for javascript types
 
-> Validator for http request, json.
-
-
-## Install
+## Installation
 
 ```sh
 $ npm install --save node-form-validator
@@ -191,7 +189,9 @@ MIT © [calidion](blog.3gcnbeta.com)
 
 [npm-image]: https://badge.fury.io/js/node-form-validator.svg
 [npm-url]: https://npmjs.org/package/node-form-validator
-[travis-image]: https://travis-ci.org/JSSDKCN/node-form-validator.svg?branch=master
-[travis-url]: https://travis-ci.org/JSSDKCN/node-form-validator
-[daviddm-image]: https://david-dm.org/JSSDKCN/node-form-validator.svg?theme=shields.io
-[daviddm-url]: https://david-dm.org/JSSDKCN/node-form-validator
+[travis-image]: https://travis-ci.org/calidion/node-form-validator.svg?branch=master
+[travis-url]: https://travis-ci.org/calidion/node-form-validator
+[daviddm-image]: https://david-dm.org/calidion/node-form-validator.svg?theme=shields.io
+[daviddm-url]: https://david-dm.org/calidion/node-form-validator
+[coveralls-image]: https://coveralls.io/repos/calidion/node-form-validator/badge.svg
+[coveralls-url]: https://coveralls.io/r/calidion/node-form-validator
