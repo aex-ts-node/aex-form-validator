@@ -4,13 +4,10 @@ var assert = require('assert');
 describe('node-form-validator', function () {
   var filter = require('../lib/index');
   var req = {
-    data: {
+    body: {
       a: 100,
       b: 200,
       c: 300
-    },
-    param: function (k) {
-      return this.data[k];
     }
   };
 
@@ -301,7 +298,7 @@ describe('node-form-validator', function () {
   describe('#result()', function () {
     it('should validate', function () {
       var req1 = {
-        data: {
+        body: {
           k1: '13181715210',
           k2: '13181715210',
           k3: 'http://www.sina.com',
@@ -314,9 +311,6 @@ describe('node-form-validator', function () {
           k11: '1:19',
           k12: '1:00'
 
-        },
-        param: function (k) {
-          return this.data[k];
         }
       };
       var confs = {
