@@ -1,7 +1,8 @@
 'use strict';
+/* eslint space-before-function-paren: 0 */
 
 var assert = require('assert');
-describe('node-form-validator', function () {
+describe('node-form-validator', function() {
   var filter = require('../lib/index');
   var req = {
     body: {
@@ -18,24 +19,24 @@ describe('node-form-validator', function () {
 
   var data = {};
 
-  describe('#extract()', function () {
-    it('should return false when the req is not present', function () {
+  describe('#extract()', function() {
+    it('should return false when the req is not present', function() {
       assert.equal(false, filter.extract(null, data, params));
     });
 
-    it('should return false when the data is not present', function () {
+    it('should return false when the data is not present', function() {
       assert.equal(false, filter.extract(req, null, params));
     });
 
-    it('should return false when the params is not present', function () {
+    it('should return false when the params is not present', function() {
       assert.equal(false, filter.extract(req, data, null));
     });
 
-    it('should return true when all the params are present', function () {
+    it('should return true when all the params are present', function() {
       assert.equal(true, filter.extract(req, data, params));
     });
 
-    it('should be assigned after ', function () {
+    it('should be assigned after ', function() {
       assert.equal(100, data.a);
       assert.equal(200, data.b);
       assert.equal(300, data.d);
@@ -43,8 +44,8 @@ describe('node-form-validator', function () {
     });
   });
 
-  describe('#validate()', function () {
-    it('should enabled validate string with length limite', function () {
+  describe('#validate()', function() {
+    it('should enabled validate string with length limite', function() {
       var params1 = {
         k1: 'hell'
       };
@@ -87,11 +88,9 @@ describe('node-form-validator', function () {
       assert.equal(true, filter.validate(params3, confs3, error));
       assert.equal(false, error.key === 'k3');
       assert.equal(false, error.reason === 'Not validate key k3');
-
     });
 
-
-    it('should validate mobile phone numbers', function () {
+    it('should validate mobile phone numbers', function() {
       var params1 = {
         k1: '13581723443'
       };
@@ -121,8 +120,7 @@ describe('node-form-validator', function () {
       assert.equal(true, error.reason === 'Not validate key k2');
     });
 
-
-    it('should validate matches', function () {
+    it('should validate matches', function() {
       var params1 = {
         k1: '13581723443',
         k2: '13581723443'
@@ -154,8 +152,7 @@ describe('node-form-validator', function () {
       assert.equal(false, error.reason === null);
     });
 
-
-    it('should validate required', function () {
+    it('should validate required', function() {
       var params1 = {
         k1: '13581723443'
       };
@@ -181,8 +178,7 @@ describe('node-form-validator', function () {
       assert.equal(true, error.reason === 'Key ' + error.key + ' is NULL');
     });
 
-
-    it('should validate many params together', function () {
+    it('should validate many params together', function() {
       var params1 = {
         k1: '13581723443',
         k2: 'hello',
@@ -211,8 +207,7 @@ describe('node-form-validator', function () {
       assert.equal(false, error.reason === 'Not validate key k1');
     });
 
-
-    it('should validate matches', function () {
+    it('should validate matches', function() {
       var params1 = {
         k1: '13581723443',
         k2: 'hello',
@@ -239,7 +234,7 @@ describe('node-form-validator', function () {
       assert.equal(true, error.reason === 'Not match key k1');
     });
 
-    it('should not validate arrays', function () {
+    it('should not validate arrays', function() {
       var params1 = ['aa', 'ddd', 'ddd'];
       var confs = {
         k1: {
@@ -261,10 +256,9 @@ describe('node-form-validator', function () {
       assert.equal(false, result);
       assert.equal(true, error.reason === 'Params must not be an Array!');
     });
-
   });
 
-  it('should not validate integer as string', function () {
+  it('should not validate integer as string', function() {
     var params1 = {
       k1: 1
     };
@@ -279,7 +273,7 @@ describe('node-form-validator', function () {
     assert.equal(false, filter.validate(params1, confs, error));
   });
 
-  it('should validate string', function () {
+  it('should validate string', function() {
     var params1 = {
       k1: '1'
     };
@@ -295,8 +289,8 @@ describe('node-form-validator', function () {
     assert.equal(true, filter.validate(params1, confs, error));
   });
 
-  describe('#result()', function () {
-    it('should validate', function () {
+  describe('#result()', function() {
+    it('should validate', function() {
       var req1 = {
         body: {
           k1: '13181715210',
@@ -355,12 +349,12 @@ describe('node-form-validator', function () {
       assert.equal(true, result);
       assert.equal(true, data1.phone === '13181715210');
       assert.equal(true, data1.k3 === 'http://www.sina.com');
-      assert.equal(true, !!data1.k2);
+      assert.equal(true, Boolean(data1.k2));
       assert.equal(true, data1.k4 === undefined);
       assert.equal(true, data1.k5 === '10:00');
     });
 
-    it('should extra json', function () {
+    it('should extra json', function() {
       var req1 = {
         k1: '13181715210',
         k2: '13181715210',
@@ -394,12 +388,12 @@ describe('node-form-validator', function () {
       var data1 = validator.extract(req1, confs);
       assert.equal(true, data1.phone === '13181715210');
       assert.equal(true, data1.k3 === 'http://www.sina.com');
-      assert.equal(true, !!data1.k2);
+      assert.equal(true, Boolean(data1.k2));
       assert.equal(true, data1.k4 === undefined);
       assert.equal(true, data1.k5 === undefined);
     });
 
-    it('should validate objects', function () {
+    it('should validate objects', function() {
       var req1 = {
         k1: {
           kk1: 'hello',
@@ -452,6 +446,37 @@ describe('node-form-validator', function () {
       var validator = filter.json;
       var data1 = validator.extract(req1, confs);
       assert.deepEqual(data1, req1);
+    });
+
+    it('should validate enumerators', function() {
+      var req1 = {
+        k12: 'hello'
+      };
+      var confs = {
+        k12: {
+          type: 'enum',
+          enums: ['hello', 'sind', 'meo']
+        }
+      };
+      var validator = filter.json;
+      var errors = {};
+      assert(filter.validate(req1, confs, errors));
+      var data1 = validator.extract(req1, confs);
+      assert.deepEqual(data1, req1);
+    });
+
+    it('should validate enumerators', function() {
+      var req1 = {
+        k12: 'sososs'
+      };
+      var confs = {
+        k12: {
+          type: 'enum',
+          enums: ['hello', 'sind', 'meo']
+        }
+      };
+      var errors = {};
+      assert(!filter.validate(req1, confs, errors));
     });
   });
 });

@@ -23,6 +23,7 @@ gulp.task('nsp', function (cb) {
 
 gulp.task('pre-test', function () {
   return gulp.src('lib/**/*.js')
+    .pipe(excludeGitignore())
     .pipe(istanbul({
       includeUntested: true
     }))
@@ -37,6 +38,7 @@ gulp.task('test', ['pre-test'], function (cb) {
     .pipe(mocha({reporter: 'spec'}))
     .on('error', function (err) {
       mochaErr = err;
+      throw err;
     })
     .pipe(istanbul.writeReports())
     .on('end', function () {
@@ -44,12 +46,16 @@ gulp.task('test', ['pre-test'], function (cb) {
     });
 });
 
+gulp.task('watch', function () {
+  gulp.watch(['lib/**/*.js', 'test/**'], ['test']);
+});
+
 gulp.task('coveralls', ['test'], function () {
   if (!process.env.CI) {
     return;
   }
 
-  return gulp.src(path.join(__dirname, 'coverage/lcov.info'))
+  gulp.src(path.join(__dirname, 'coverage/lcov.info'))
     .pipe(coveralls());
 });
 
