@@ -354,6 +354,70 @@ describe('node-form-validator', function() {
       assert.equal(true, data1.k5 === '10:00');
     });
 
+    it('should validate', function() {
+      var req1 = {
+        params: {
+          k1: '13181715210',
+          k2: '13181715210',
+          k3: 'http://www.sina.com',
+          k5: '10:00',
+          k6: '24:00',
+          k7: '00:19',
+          k8: '19:59',
+          k9: '24:00:00',
+          k10: '23:59:59',
+          k11: '1:19',
+          k12: '1:00'
+
+        }
+      };
+      var confs = {
+        k1: {
+          alias: 'phone',
+          type: 'phone',
+          locale: 'zh-CN'
+
+        },
+        k2: {
+          matches: 'k1'
+        },
+        k3: {
+          type: 'url'
+        },
+        k4: {
+          ignore: true
+        },
+        k5: {
+          type: 'time'
+        },
+        k6: {
+          type: 'time'
+        },
+        k7: {
+          type: 'time'
+        },
+        k8: {
+          type: 'time'
+        },
+        k9: {
+          type: 'time'
+        },
+        k10: {
+          type: 'time'
+        }
+      };
+      var validator = filter;
+      var data1 = {};
+      var error = {};
+      var result = validator.v(req1, confs, data1, error, 'params');
+      assert.equal(true, result);
+      assert.equal(true, data1.phone === '13181715210');
+      assert.equal(true, data1.k3 === 'http://www.sina.com');
+      assert.equal(true, Boolean(data1.k2));
+      assert.equal(true, data1.k4 === undefined);
+      assert.equal(true, data1.k5 === '10:00');
+    });
+
     it('should extra json', function() {
       var req1 = {
         k1: '13181715210',
