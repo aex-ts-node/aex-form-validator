@@ -165,39 +165,33 @@ var error = {};
 ```
 
 
-#### 直接校验nodejs的request请求
+####  直接检验结果
 
 ```js
-function(req, res) {
-
   //Errors reported
-  var error = {};
-  var data = {};
-  if (validator.v(req, conf, data, error)) {
-  // Do something for validation passed
-  } else {
-  // Do something for validation failed
-  }
-}
+var error = validator.validate(data, conf);
+assert(error.code ==== 0)  // code为0表示成功, code为-1表示失败
+error.message              // message是成功或者失败的消息
+error.data                 // error.data是根据配置抽取出来的数据，是过滤过的数据
+  
 ```
 
-#### 校验Object对象
+#### 支持基于规则抽取对象
 
 ```js
-  var json = {}
-  //Errors reported
-  var error = {};
-  if (validator.validate(json, conf, error)) {
-  // Do something for validation passed
-  } else {
-  // Do something for validation failed
-  }
+var extracted = validator.extract(data, confs);
 ```
 
-#### 从Object对象里提取
+#### 支持作为express的中间件
 
 ```js
-  var extractedData = validator.json.extract(json, conf));
+express.use(validator.asConnect);
+
+express.get('/', function(req, res) {
+req.validate
+req.extract
+});
+
 ```
 
 
