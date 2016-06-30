@@ -1,8 +1,8 @@
 {
   "name": "node-form-validator",
-  "version": "0.6.1",
+  "version": "1.0.0",
   "description": "validator for objects, json, forms",
-  "homepage": "https://github.com/JSSDKCN/node-form-validator",
+  "homepage": "https://github.com/calidion/node-form-validator",
   "author": {
     "name": "calidion",
     "email": "calidion@gmail.com",
@@ -22,13 +22,13 @@
   ],
   "repository": "JSSDK/node-form-validator",
   "devDependencies": {
-    "eslint-config-xo": "^0.14.0",
-    "eslint-config-xo-space": "^0.13.0",
+    "eslint-config-xo": "^0.15.2",
+    "eslint-config-xo-space": "^0.14.0",
     "gulp": "^3.9.0",
     "gulp-coveralls": "^0.1.0",
     "gulp-eslint": "^2.0.0",
     "gulp-exclude-gitignore": "^1.0.0",
-    "gulp-istanbul": "^0.10.3",
+    "gulp-istanbul": "^1.0.0",
     "gulp-mocha": "^2.0.0",
     "gulp-nsp": "^2.1.0",
     "gulp-plumber": "^1.0.0"
