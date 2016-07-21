@@ -262,4 +262,31 @@ describe('node-form-validator', function () {
       message: 'Success'
     }, error);
   });
+
+  it('should validate zero number', function () {
+    var params1 = {
+      state: 'STATE',
+      scope: 0
+    };
+    var confs = {
+      state: {
+        type: 'string',
+        maxLength: 32,
+        required: true
+      },
+      scope: {
+        type: 'int',
+        required: true
+      }
+    };
+    var error = filter.validate(params1, confs);
+    assert.deepEqual({
+      code: 0,
+      message: 'Success',
+      data: {
+        state: 'STATE',
+        scope: 0
+      }
+    }, error);
+  });
 });
