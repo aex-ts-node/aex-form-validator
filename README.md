@@ -100,6 +100,7 @@ var config = {
   'hexadecimal'
   'hexcolor'
   'int'
+  'bool'
   'float'
   'uuid'
   'date'

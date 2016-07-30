@@ -89,12 +89,15 @@ describe('#validate()', function () {
   });
 
   it('should validate object', function () {
-    var data = validator.validate({
-      k: {
+    var params = {
+      k:
+      {
         k1: 1
       }
-    }, {
-      k: {
+    };
+    var rules = {
+      k:
+      {
         type: 'object',
         validate: {
           k1: {
@@ -103,7 +106,8 @@ describe('#validate()', function () {
           }
         }
       }
-    });
+    };
+    var data = validator.validate(params, rules);
     assert.deepEqual({
       code: 0,
       message: 'Success'
@@ -111,9 +115,10 @@ describe('#validate()', function () {
   });
 
   it('should fail to validate object', function () {
-    var data = validator.validate({
+    var params = {
       k: {}
-    }, {
+    };
+    var rules = {
       k: {
         type: 'object',
         validate: {
@@ -123,7 +128,8 @@ describe('#validate()', function () {
           }
         }
       }
-    });
+    };
+    var data = validator.validate(params, rules);
     assert.deepEqual({
       code: -1,
       key: 'k',
@@ -132,32 +138,122 @@ describe('#validate()', function () {
   });
 
   it('should fail to validate object', function () {
-    var data = validator.validate({
+    var params = {
       k: {}
-    }, {
+    };
+    var rules = {
       k: {
         type: 'gooo'
       }
-    });
+    };
+    var data = validator.validate(params, rules);
     assert.deepEqual({
       code: -1,
       key: 'k',
-      message: 'Type for key "k" is not valid!'
+      message: 'Type for key \'k\' is not valid!'
     }, data);
   });
 
   it('should validate text', function () {
-    var data = validator.validate({
+    var params = {
       k: 'sdfsf'
-    }, {
+    };
+    var rules = {
       k: {
         type: 'text',
         required: true
       }
-    });
+    };
+    var data = validator.validate(params, rules);
     assert.deepEqual({
       code: 0,
       message: 'Success'
+    }, data);
+  });
+
+  it('should validate boolean', function () {
+    var params = {
+      k: 'true'
+    };
+    var rules = {
+      k: {
+        type: 'bool',
+        required: true
+      }
+    };
+    var data = validator.validate(params, rules);
+    assert.deepEqual({
+      code: 0,
+      message: 'Success'
+    }, data);
+  });
+
+  it('should validate boolean', function () {
+    var params = {
+      k: 'false'
+    };
+    var rules = {
+      k: {
+        type: 'bool',
+        required: true
+      }
+    };
+    var data = validator.validate(params, rules);
+    assert.deepEqual({
+      code: 0,
+      message: 'Success'
+    }, data);
+  });
+
+  it('should validate boolean', function () {
+    var params = {
+      k: true
+    };
+    var rules = {
+      k: {
+        type: 'bool',
+        required: true
+      }
+    };
+    var data = validator.validate(params, rules);
+    assert.deepEqual({
+      code: 0,
+      message: 'Success'
+    }, data);
+  });
+
+  it('should validate boolean', function () {
+    var params = {
+      k: false
+    };
+    var rules = {
+      k: {
+        type: 'bool',
+        required: true
+      }
+    };
+    var data = validator.validate(params, rules);
+    assert.deepEqual({
+      code: 0,
+      message: 'Success'
+    }, data);
+  });
+
+  it('should validate boolean', function () {
+    var params = {
+      k: 1
+    };
+    var rules = {
+      k: {
+        type: 'bool',
+        required: true
+      }
+    };
+    var data = validator.validate(params, rules);
+    assert.deepEqual({
+      code: -1,
+      key: 'k',
+      message: 'Not validate key k'
     }, data);
   });
 });
