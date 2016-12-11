@@ -8,7 +8,7 @@ describe('#asConnect()', function () {
   it('should extract nothing', function (done) {
     var req = {};
     var res = {};
-    filter.asConnect(req, res, function name() {
+    filter.asConnect(req, res, function () {
       assert(req.validate === filter.validate);
       assert(req.extract === filter.extract);
       done();

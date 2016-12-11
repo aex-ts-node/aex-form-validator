@@ -112,7 +112,8 @@ var config = {
   'phone'
   'ascii'
   'multibyte'
-  'time'
+  'time',
+  'enum',
   'string', //no more than 256 chars
   'text',   //no more than 65536 chars,
   'object'  //have children
