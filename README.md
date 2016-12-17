@@ -174,6 +174,9 @@ var error = {};
 ```js
   //Errors reported
 var error = validator.validate(data, conf);
+if (!error) {
+  return false;            // error 为 false时，表示没有校验行为
+}
 assert(error.code ==== 0)  // code为0表示成功, code为-1表示失败
 error.message              // message是成功或者失败的消息
 error.data                 // error.data是根据配置抽取出来的数据，是过滤过的数据
