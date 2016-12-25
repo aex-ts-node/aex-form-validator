@@ -275,7 +275,7 @@ describe('#validate()', function () {
     }, data);
   });
 
-   it('should validate regex', function () {
+  it('should validate regex', function () {
     var params = {
       k: '0.0.0.0'
     };
