@@ -256,4 +256,40 @@ describe('#validate()', function () {
       message: 'Not validate key k'
     }, data);
   });
+
+  it('should validate regex', function () {
+    var params = {
+      k: 1
+    };
+    var rules = {
+      k: {
+        type: 'regex',
+        regex: /\d/,
+        required: true
+      }
+    };
+    var data = validator.validate(params, rules);
+    assert.deepEqual({
+      code: 0,
+      message: 'Success'
+    }, data);
+  });
+
+   it('should validate regex', function () {
+    var params = {
+      k: '0.0.0.0'
+    };
+    var rules = {
+      k: {
+        type: 'regex',
+        regex: /\d\.\d\.\d\.\d/,
+        required: true
+      }
+    };
+    var data = validator.validate(params, rules);
+    assert.deepEqual({
+      code: 0,
+      message: 'Success'
+    }, data);
+  });
 });
