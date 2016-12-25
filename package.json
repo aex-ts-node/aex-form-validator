@@ -20,7 +20,7 @@
     "json",
     "object"
   ],
-  "repository": "JSSDK/node-form-validator",
+  "repository": "calidion/node-form-validator",
   "devDependencies": {
     "eslint-config-xo": "^0.17.0",
     "eslint-config-xo-space": "^0.15.0",
