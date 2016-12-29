@@ -20,7 +20,6 @@ describe('#result()', function () {
         alias: 'phone',
         type: 'phone',
         locale: 'zh-CN'
-
       },
       k2: {
         matches: 'k1'
@@ -85,9 +84,7 @@ describe('#result()', function () {
     var confs = {
       k1: {
         alias: 'phone',
-        type: 'phone',
-        locale: 'zh-CN'
-
+        type: 'phone'
       },
       k2: {
         matches: 'k1'
@@ -211,8 +208,7 @@ describe('#result()', function () {
                   },
                   kk6: {
                     type: 'phone',
-                    alias: 'phone',
-                    locale: 'zh-CN'
+                    alias: 'phone'
                   }
                 }
               }
@@ -254,6 +250,39 @@ describe('#result()', function () {
       k12: {
         type: 'enum',
         enums: ['hello', 'sind', 'meo']
+      }
+    };
+    assert.deepEqual({
+      code: -1,
+      key: 'k12',
+      message: 'Not validate key k12'
+    }, filter._validate(req1, confs));
+  });
+
+  it('should not validate enumerators', function () {
+    var req1 = {
+      k12: 'sososs'
+    };
+    var confs = {
+      k12: {
+        type: 'enum'
+      }
+    };
+    assert.deepEqual({
+      code: -1,
+      key: 'k12',
+      message: 'Not validate key k12'
+    }, filter._validate(req1, confs));
+  });
+
+  it('should not validate enumerators', function () {
+    var req1 = {
+      k12: 'sososs'
+    };
+    var confs = {
+      k12: {
+        type: 'enum',
+        enums: {}
       }
     };
     assert.deepEqual({

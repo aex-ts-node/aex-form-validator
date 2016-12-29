@@ -37,13 +37,13 @@ describe('node-form-validator', function () {
       assert.deepEqual({
         code: -1,
         key: 'k1',
-        message: 'Not validate key k1'
+        message: 'Not validate key k1 is too short!'
       }, filter._validate(params1, confs));
 
       assert.deepEqual({
         code: -1,
         key: 'k2',
-        message: 'Not validate key k2'
+        message: 'Not validate key k2 is too long!'
       }, filter._validate(params2, confs2));
 
       assert.deepEqual({
@@ -241,7 +241,7 @@ describe('node-form-validator', function () {
     assert.deepEqual({
       code: -1,
       key: 'k1',
-      message: 'Not validate key k1'
+      message: 'Not validate key k1 is not a string type!'
     }, error);
   });
 

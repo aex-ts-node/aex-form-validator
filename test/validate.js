@@ -292,4 +292,21 @@ describe('#validate()', function () {
       message: 'Success'
     }, data);
   });
+  it('should validate string more than 255', function () {
+    var params = {
+      k: '123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'
+    };
+    var rules = {
+      k: {
+        type: 'string',
+        required: true
+      }
+    };
+    var data = validator.validate(params, rules);
+    assert.deepEqual({
+      code: -1,
+      key: 'k',
+      message: 'Not validate key k is exceeding the allowed max length!'
+    }, data);
+  });
 });
