@@ -309,4 +309,36 @@ describe('#validate()', function () {
       message: 'Not validate key k is exceeding the allowed max length!'
     }, data);
   });
+
+  it('should validate array', function () {
+    var params = {
+      k: [1, 2, 3, 4]
+    };
+    var rules = {
+      k: {
+        type: 'array'
+      }
+    };
+    var data = validator.validate(params, rules);
+    assert.deepEqual({
+      code: 0,
+      message: 'Success'
+    }, data);
+  });
+  it('should validate array', function () {
+    var params = {
+      k: {}
+    };
+    var rules = {
+      k: {
+        type: 'array'
+      }
+    };
+    var data = validator.validate(params, rules);
+    assert.deepEqual({
+      code: -1,
+      key: 'k',
+      message: 'Not validate key k'
+    }, data);
+  });
 });

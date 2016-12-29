@@ -114,9 +114,10 @@ var config = {
   'multibyte'
   'time',
   'enum',
-  'string', //no more than 256 chars
-  'text',   //no more than 65536 chars,
-  'object'  //have children
+  'array',  // array [1, 2, 3, 4]
+  'string', // no more than 256 chars
+  'text',   // unlimited chars
+  'object'  // have children
 ```
 
 ## 用法
