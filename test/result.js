@@ -163,8 +163,7 @@ describe('#result()', function () {
         type: 'time'
       }
     };
-    var params = filter._getParams(confs);
-    var data1 = filter.extract(req1, params);
+    var data1 = filter.extract(req1, confs);
     assert.equal(true, data1.phone === '13181715210');
     assert.equal(true, data1.k3 === 'http://www.sina.com');
     assert.equal(true, Boolean(data1.k2));
@@ -221,8 +220,7 @@ describe('#result()', function () {
         type: 'time'
       }
     };
-    var params = filter._getParams(confs);
-    var data1 = filter.extract(req1, params);
+    var data1 = filter.extract(req1, confs);
     assert.deepEqual(data1, req1);
   });
 
@@ -237,8 +235,7 @@ describe('#result()', function () {
       }
     };
     assert(filter._validate(req1, confs));
-    var params = filter._getParams(confs);
-    var data1 = filter.extract(req1, params);
+    var data1 = filter.extract(req1, confs);
     assert.deepEqual(data1, req1);
   });
 

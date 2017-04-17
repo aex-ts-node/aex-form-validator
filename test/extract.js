@@ -17,11 +17,11 @@ var data = {
 describe('#extract()', function () {
   var result;
   it('should return false when the data is not present', function () {
-    assert.equal(false, filter.extract(null, params));
+    assert.equal(false, filter._extract(null, params));
   });
 
   it('should return false when the params is not present', function () {
-    assert.equal(false, filter.extract(data));
+    assert.equal(false, filter._extract(data));
   });
 
   it('should return false when the req is not present', function () {
@@ -29,11 +29,11 @@ describe('#extract()', function () {
       a: 100,
       b: 200,
       d: 300
-    }, filter.extract(data, params));
+    }, filter._extract(data, params));
   });
 
   it('should return true when all the params are present', function () {
-    result = filter.extract(data, params);
+    result = filter._extract(data, params);
     assert.deepEqual({
       a: 100,
       b: 200,
@@ -43,5 +43,26 @@ describe('#extract()', function () {
   it('should extract nothing', function () {
     result = filter.validate({}, {});
     assert.equal(false, result);
+  });
+
+  it('should extract data', function () {
+    result = filter.extract(
+      {
+        a: '100',
+        b: 100
+      }, {
+        a: {
+          type: 'string',
+          required: true
+        },
+        b: {
+          type: 'int'
+        }
+      }
+    );
+    assert.deepEqual({
+      a: '100',
+      b: 100
+    }, result);
   });
 });
